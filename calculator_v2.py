@@ -1,7 +1,12 @@
+import argparse
+import logging
 import os
 import sys
 import xml.etree.ElementTree as ET
 from functools import reduce
+from logging.config import fileConfig
+from pathlib import Path
+
 
 def addition(node):
     items = []
@@ -64,7 +69,7 @@ operators = {
     'division': division
 }
 
-def expr_parser(filepath):
+def parse(filepath):
     results = {}
     with open(filepath) as file:
         tree = ET.parse(file)
@@ -73,7 +78,7 @@ def expr_parser(filepath):
             results[child.attrib['id']] = operators[child.tag](child)
     return results
 
-def convert_to_xml(results):
+def convert(results):
     root = ET.Element('expressions')
     for k, v in results.items():
         item = ET.SubElement(root, 'result', {'id': k})
@@ -81,19 +86,58 @@ def convert_to_xml(results):
     return root
 
 def main():
+    """
+    Driver function that accepts and validates user arguments
+    and passes the path to individual files to the expression parser
+    :returns integer indicating success or failure
+    """
 
-    in_dir = sys.argv[1]
-    out_dir = sys.argv[2]
+    # Use argparse to parse user arguments
 
-    in_path = os.path.abspath(in_dir)
-    out_path = os.path.abspath(out_dir)
+    parser = argparse.ArgumentParser(description = 'Process a set of expression files in a directory.')
+    parser.add_argument('source', help='source directory for input files')
+    parser.add_argument('target', help='destination directory for output files')
+    args = parser.parse_args()
 
-    for name in os.listdir(in_dir):
-        path = os.path.join(in_path, name)
-        results = expr_parser(path)
-        if len(results) > 0:
-            result_xml = convert_to_xml(results)
-            ET.dump(result_xml)
+    spath = Path(args.source)  # Path to source directory
+    tpath = Path(args.target)  # Path to destination directory
+
+    logger = logging.getLogger()
+
+    # Validate arguments and log error message (if any)
+
+    if not (spath.exists() and spath.is_dir()):
+        logger.error('Given path to source directory is not valid.')
+        return 1
+
+    if not (tpath.exists() and tpath.is_dir()):
+        logger.error('Given path to target directory is not valid.')
+        return 1
+
+    source = spath.resolve()
+    target = tpath.resolve()
+
+    if not (os.access(source, os.R_OK)):
+        logger.error('Read permissions on source directory is missing.')
+        return 1
+
+    if not (os.access(target, os.R_OK|os.W_OK)):
+        logger.error('Read/write permissions on target directory are missing.')
+        return 1
+
+    # Process files in the source directory
+
+    logger.info('Source path: %s', source)
+    logger.info('Target path: %s', target)
+
+    with os.scandir(source) as it:
+        for entry in it:
+            logger.info("Processing file: %s", entry.name)
+            results = parse(entry.path)
+            if len(results) > 0:
+                result_xml = convert(results)
+                ET.dump(result_xml)
 
 if __name__ == '__main__':
+    fileConfig('logging.ini')
     main()

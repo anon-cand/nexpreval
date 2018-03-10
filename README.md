@@ -2,11 +2,14 @@
 
 ## To-Do
 
+- [x] Think about your data structure
 - [x] Create a bare bones working version.
 - [x] Add logging, argument parsing and validations.
+- [x] Separate parsing and data structure which is evaluated.
+- [ ] Is the design of ops and protocol class (Operations) Pythonic? 
 - [ ] Add unit tests. 
 - [ ] Data Generator for unit test data
-- [ ] Separate parsing and data structure which is evaluated.
+- [ ] Dynamically build the operations map by importing all modules from folder?
 - [ ] Refactor to module and driver program
 - [ ] Convert to a package 
 - [ ] Upload on github for continuous integration
@@ -17,6 +20,8 @@
 - [ ] Refactor to best practices. Check PEP8 conformance
 - [ ] Check package can be uploaded to PyPi.
 - [ ] Is the program able to handle overflows of numbers?
+- [ ] Are the guidelines in Fluent Python / Zen of Python followed?
+- [ ] Is the application conforming to TwelveFactors?
 
 ## Links
 

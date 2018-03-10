@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:complexType name="operators">
+        <xs:choice>
+            <xs:element ref="addition" maxOccurs="1"/>
+            <xs:element ref="subtraction" maxOccurs="1"/>
+            <xs:element ref="multiplication" maxOccurs="1"/>
+            <xs:element ref="division" maxOccurs="1"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:element name="item">
+        <xs:complexType>
+            <xs:choice maxOccurs="1">
+                <xs:element name="digit" type="xs:int" minOccurs="1"/>
+                <!--I want it to allow 1 occurrence but then LiquidXML breaks-->
+                <xs:element name="operator" type="operators" minOccurs="0"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="factor">
+        <xs:complexType>
+            <xs:choice maxOccurs="1">
+                <xs:element name="digit" type="xs:int" minOccurs="1"/>
+                <xs:element name="operator" type="operators" minOccurs="1"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="dividend">
+        <xs:complexType>
+            <xs:choice maxOccurs="1">
+                <xs:element name="digit" type="xs:int" minOccurs="1"/>
+                <xs:element name="operator" type="operators" minOccurs="1"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="divisor">
+        <xs:complexType>
+            <xs:choice maxOccurs="1">
+                <xs:element name="digit" type="xs:int" minOccurs="1"/>
+                <xs:element name="operator" type="operators" minOccurs="1"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="minuend">
+        <xs:complexType>
+            <xs:choice maxOccurs="1">
+                <xs:element name="digit" type="xs:int" minOccurs="1"/>
+                <xs:element name="operator" type="operators" minOccurs="1"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="subtrahend">
+        <xs:complexType>
+            <xs:choice maxOccurs="1">
+                <xs:element name="digit" type="xs:int" minOccurs="1"/>
+                <xs:element name="operator" type="operators" minOccurs="1"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="addition">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="item" minOccurs="2" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:positiveInteger"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="subtraction">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="minuend" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="subtrahend" minOccurs="1" maxOccurs="1"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:positiveInteger"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="multiplication">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="factor" minOccurs="2" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:positiveInteger"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="division">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="dividend" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="divisor" minOccurs="1" maxOccurs="1"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:positiveInteger"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="expressions">
+        <xs:complexType>
+            <xs:choice minOccurs="4" maxOccurs="unbounded">
+                <xs:element ref="addition"/>
+                <xs:element ref="subtraction"/>
+                <xs:element ref="multiplication"/>
+                <xs:element ref="division"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

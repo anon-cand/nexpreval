@@ -41,7 +41,12 @@
         <dividend>54</dividend>
         <divisor>
             <addition>
-                <item>3</item>
+                <item>
+                    <division>
+                        <dividend>9</dividend>
+                        <divisor>3</divisor>
+                    </division>
+                </item>
                 <item>6</item>
             </addition>
         </divisor>

@@ -23,4 +23,4 @@
 - [Argument Parser](https://docs.python.org/3/library/argparse.html)
 - [Python Antipatterns](https://docs.quantifiedcode.com/python-anti-patterns/correctness/not_using_setdefault_to_initialize_a_dictionary.html)
 - [Comprehensions](https://www.smallsurething.com/list-dict-and-set-comprehensions-by-example/)
-
+- [Liquid XML - XSD to XML generator](https://www.liquid-technologies.com/online-xsd-to-xml-converter)

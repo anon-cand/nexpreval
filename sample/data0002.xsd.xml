@@ -1,0 +1,388 @@
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Created with Liquid Technologies Online Tools 1.0 (https://www.liquid-technologies.com) -->
+<expressions xsi:noNamespaceSchemaLocation="schema.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <addition id="1865334361">
+        <item />
+        <item>
+            <operator>
+                <multiplication id="2972400836">
+                    <factor>
+                        <digit>-905</digit>
+                    </factor>
+                    <factor>
+                        <operator>
+                            <addition>
+                                <item />
+                                <item />
+                            </addition>
+                        </operator>
+                    </factor>
+                </multiplication>
+            </operator>
+        </item>
+        <item />
+    </addition>
+    <multiplication id="2422915605">
+        <factor>
+            <digit>-9300</digit>
+        </factor>
+        <factor>
+            <operator>
+                <subtraction>
+                    <minuend>
+                        <operator>
+                            <subtraction>
+                                <minuend>
+                                    <operator>
+                                        <multiplication>
+                                            <factor>
+                                                <operator>
+                                                    <division id="2340641212">
+                                                        <dividend>
+                                                            <digit>-1264</digit>
+                                                        </dividend>
+                                                        <divisor>
+                                                            <digit>8771</digit>
+                                                        </divisor>
+                                                    </division>
+                                                </operator>
+                                            </factor>
+                                            <factor>
+                                                <operator>
+                                                    <addition id="1547231903">
+                                                        <item>
+                                                            <digit>8381</digit>
+                                                        </item>
+                                                        <item />
+                                                    </addition>
+                                                </operator>
+                                            </factor>
+                                        </multiplication>
+                                    </operator>
+                                </minuend>
+                                <subtrahend>
+                                    <operator>
+                                        <division>
+                                            <dividend>
+                                                <digit>-8295</digit>
+                                            </dividend>
+                                            <divisor>
+                                                <digit>2251</digit>
+                                            </divisor>
+                                        </division>
+                                    </operator>
+                                </subtrahend>
+                            </subtraction>
+                        </operator>
+                    </minuend>
+                    <subtrahend>
+                        <digit>-9909</digit>
+                    </subtrahend>
+                </subtraction>
+            </operator>
+        </factor>
+    </multiplication>
+    <multiplication id="3228509736">
+        <factor>
+            <operator>
+                <multiplication id="1357948400">
+                    <factor>
+                        <digit>-5221</digit>
+                    </factor>
+                    <factor>
+                        <operator>
+                            <multiplication id="2629593726">
+                                <factor>
+                                    <digit>-3384</digit>
+                                </factor>
+                                <factor>
+                                    <digit>-6880</digit>
+                                </factor>
+                            </multiplication>
+                        </operator>
+                    </factor>
+                </multiplication>
+            </operator>
+        </factor>
+        <factor>
+            <digit>5951</digit>
+        </factor>
+        <factor>
+            <operator>
+                <multiplication id="3673597197">
+                    <factor>
+                        <digit>-9734</digit>
+                    </factor>
+                    <factor>
+                        <operator>
+                            <multiplication id="233074990">
+                                <factor>
+                                    <operator>
+                                        <addition id="2138880828">
+                                            <item>
+                                                <digit>2205</digit>
+                                            </item>
+                                            <item>
+                                                <digit>-8167</digit>
+                                            </item>
+                                        </addition>
+                                    </operator>
+                                </factor>
+                                <factor>
+                                    <digit>519</digit>
+                                </factor>
+                            </multiplication>
+                        </operator>
+                    </factor>
+                </multiplication>
+            </operator>
+        </factor>
+        <factor>
+            <operator>
+                <addition id="2362429581">
+                    <item>
+                        <digit>-1062</digit>
+                    </item>
+                    <item />
+                </addition>
+            </operator>
+        </factor>
+    </multiplication>
+    <multiplication id="3432245804">
+        <factor>
+            <operator>
+                <multiplication id="3538657914">
+                    <factor>
+                        <operator>
+                            <addition>
+                                <item>
+                                    <digit>7749</digit>
+                                </item>
+                                <item />
+                            </addition>
+                        </operator>
+                    </factor>
+                    <factor>
+                        <operator>
+                            <addition id="3311969540">
+                                <item />
+                                <item>
+                                    <digit>-3618</digit>
+                                </item>
+                            </addition>
+                        </operator>
+                    </factor>
+                </multiplication>
+            </operator>
+        </factor>
+        <factor>
+            <digit>7827</digit>
+        </factor>
+        <factor>
+            <operator>
+                <multiplication id="16398185">
+                    <factor>
+                        <digit>5197</digit>
+                    </factor>
+                    <factor>
+                        <digit>2296</digit>
+                    </factor>
+                </multiplication>
+            </operator>
+        </factor>
+        <factor>
+            <operator>
+                <subtraction>
+                    <minuend>
+                        <operator>
+                            <division id="2711820875">
+                                <dividend>
+                                    <digit>-5185</digit>
+                                </dividend>
+                                <divisor>
+                                    <digit>4162</digit>
+                                </divisor>
+                            </division>
+                        </operator>
+                    </minuend>
+                    <subtrahend>
+                        <digit>6357</digit>
+                    </subtrahend>
+                </subtraction>
+            </operator>
+        </factor>
+    </multiplication>
+    <division id="2736435333">
+        <dividend>
+            <operator>
+                <multiplication id="1946350329">
+                    <factor>
+                        <operator>
+                            <subtraction>
+                                <minuend>
+                                    <digit>9479</digit>
+                                </minuend>
+                                <subtrahend>
+                                    <digit>-7901</digit>
+                                </subtrahend>
+                            </subtraction>
+                        </operator>
+                    </factor>
+                    <factor>
+                        <operator>
+                            <addition id="1738611351">
+                                <item />
+                                <item>
+                                    <digit>3238</digit>
+                                </item>
+                            </addition>
+                        </operator>
+                    </factor>
+                </multiplication>
+            </operator>
+        </dividend>
+        <divisor>
+            <digit>-9681</digit>
+        </divisor>
+    </division>
+    <addition id="2750587250">
+        <item>
+            <digit>-1739</digit>
+        </item>
+        <item>
+            <digit>3498</digit>
+        </item>
+        <item>
+            <digit>-8524</digit>
+        </item>
+        <item>
+            <operator>
+                <subtraction>
+                    <minuend>
+                        <operator>
+                            <multiplication>
+                                <factor>
+                                    <operator>
+                                        <multiplication id="2642276765">
+                                            <factor>
+                                                <digit>-7806</digit>
+                                            </factor>
+                                            <factor>
+                                                <digit>4283</digit>
+                                            </factor>
+                                        </multiplication>
+                                    </operator>
+                                </factor>
+                                <factor>
+                                    <operator>
+                                        <subtraction>
+                                            <minuend>
+                                                <digit>-6091</digit>
+                                            </minuend>
+                                            <subtrahend>
+                                                <digit>-4427</digit>
+                                            </subtrahend>
+                                        </subtraction>
+                                    </operator>
+                                </factor>
+                            </multiplication>
+                        </operator>
+                    </minuend>
+                    <subtrahend>
+                        <digit>9047</digit>
+                    </subtrahend>
+                </subtraction>
+            </operator>
+        </item>
+        <item>
+            <operator>
+                <subtraction>
+                    <minuend>
+                        <operator>
+                            <division>
+                                <dividend>
+                                    <digit>-7616</digit>
+                                </dividend>
+                                <divisor>
+                                    <digit>9370</digit>
+                                </divisor>
+                            </division>
+                        </operator>
+                    </minuend>
+                    <subtrahend>
+                        <operator>
+                            <division id="3075136454">
+                                <dividend>
+                                    <operator>
+                                        <subtraction id="4270554701">
+                                            <minuend>
+                                                <operator>
+                                                    <subtraction id="1589593166">
+                                                        <minuend>
+                                                            <digit>8036</digit>
+                                                        </minuend>
+                                                        <subtrahend>
+                                                            <digit>-1420</digit>
+                                                        </subtrahend>
+                                                    </subtraction>
+                                                </operator>
+                                            </minuend>
+                                            <subtrahend>
+                                                <operator>
+                                                    <multiplication>
+                                                        <factor>
+                                                            <digit>502</digit>
+                                                        </factor>
+                                                        <factor>
+                                                            <operator>
+                                                                <division id="2814977400">
+                                                                    <dividend>
+                                                                        <digit>6712</digit>
+                                                                    </dividend>
+                                                                    <divisor>
+                                                                        <operator>
+                                                                            <multiplication>
+                                                                                <factor>
+                                                                                    <digit>-3479</digit>
+                                                                                </factor>
+                                                                                <factor>
+                                                                                    <operator>
+                                                                                        <addition>
+                                                                                            <item />
+                                                                                            <item>
+                                                                                                <digit>9526</digit>
+                                                                                            </item>
+                                                                                        </addition>
+                                                                                    </operator>
+                                                                                </factor>
+                                                                            </multiplication>
+                                                                        </operator>
+                                                                    </divisor>
+                                                                </division>
+                                                            </operator>
+                                                        </factor>
+                                                    </multiplication>
+                                                </operator>
+                                            </subtrahend>
+                                        </subtraction>
+                                    </operator>
+                                </dividend>
+                                <divisor>
+                                    <operator>
+                                        <addition id="82012400">
+                                            <item />
+                                            <item />
+                                        </addition>
+                                    </operator>
+                                </divisor>
+                            </division>
+                        </operator>
+                    </subtrahend>
+                </subtraction>
+            </operator>
+        </item>
+        <item />
+    </addition>
+</expressions>

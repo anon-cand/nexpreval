@@ -1,0 +1,25 @@
+<!DOCTYPE expressions [
+        <!ELEMENT expressions (addition|subtraction|multiplication|division)*>
+        <!ELEMENT addition (item)*>
+        <!ATTLIST addition
+                id CDATA #IMPLIED
+                complex CDATA #IMPLIED>
+        <!ELEMENT item (#PCDATA|addition|subtraction|multiplication|division)*>
+        <!ELEMENT subtraction (minuend|subtrahend)*>
+        <!ATTLIST subtraction
+                id CDATA #IMPLIED
+                complex CDATA #IMPLIED>
+        <!ELEMENT minuend (#PCDATA|addition|subtraction|multiplication|division)>
+        <!ELEMENT subtrahend (#PCDATA|addition|subtraction|multiplication|division)>
+        <!ELEMENT multiplication (factor)*>
+        <!ATTLIST multiplication
+                id CDATA #IMPLIED
+                complex CDATA #IMPLIED>
+        <!ELEMENT factor (#PCDATA|addition|subtraction|multiplication|division)*>
+        <!ELEMENT division (dividend|divisor)*>
+        <!ATTLIST division
+                id CDATA #REQUIRED
+                complex CDATA #REQUIRED>
+        <!ELEMENT dividend (#PCDATA|addition|subtraction|multiplication|division)>
+        <!ELEMENT divisor (#PCDATA|addition|subtraction|multiplication|division)*>
+        ]>

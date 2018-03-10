@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:complexType name="AdditionType">
+        <xs:sequence>
+            <xs:element name="item" minOccurs="2" maxOccurs="unbounded" type="xs:integer"/>
+        </xs:sequence>
+        <xs:attribute type="xs:int" name="id" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="SubtractionType">
+        <xs:sequence>
+            <xs:element name="minuend" minOccurs="1" maxOccurs="1" type="xs:integer"/>
+            <xs:element name="subtrahend" minOccurs="1" maxOccurs="1" type="xs:integer"/>
+        </xs:sequence>
+        <xs:attribute type="xs:int" name="id" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="MultiplicationType">
+        <xs:sequence>
+            <xs:element name="factor" minOccurs="2" maxOccurs="unbounded" type="xs:integer"/>
+        </xs:sequence>
+        <xs:attribute type="xs:int" name="id" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="DivisionType">
+        <xs:sequence>
+            <xs:element name="dividend" minOccurs="1" maxOccurs="1" type="xs:integer"/>
+            <xs:element name="divisor" minOccurs="1" maxOccurs="1" type="xs:integer"/>
+        </xs:sequence>
+        <xs:attribute type="xs:int" name="id" use="required"/>
+    </xs:complexType>
+    <xs:element name="expressions">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="addition" type="AdditionType" minOccurs="2" maxOccurs="unbounded"/>
+                <xs:element name="subtraction" type="SubtractionType" minOccurs="2" maxOccurs="unbounded"/>
+                <xs:element name="multiplication" type="MultiplicationType" minOccurs="2" maxOccurs="unbounded"/>
+                <xs:element name="division" type="DivisionType" minOccurs="2" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -2,21 +2,21 @@
 
 ## To-Do
 
-[x] Create a bare bones working version.
-[x] Add logging, argument parsing and validations.
-[ ] Add unit tests. 
-[ ] Data Generator for unit test data
-[ ] Separate parsing and data structure which is evaluated.
-[ ] Refactor to module and driver program
-[ ] Convert to a package 
-[ ] Upload on github for continuous integration
-[ ] Handling of large files (Pull-API/Memory Mapped files)
-[ ] Speed-up through multiprocessing or threading (pypi)
-[ ] Sphinx documentation
-[ ] Add continuous measurements
-[ ] Refactor to best practices. Check PEP8 conformance
-[ ] Check package can be uploaded to PyPi.
-[ ] Is the program able to handle overflows of numbers?
+- [x] Create a bare bones working version.
+- [x] Add logging, argument parsing and validations.
+- [ ] Add unit tests. 
+- [ ] Data Generator for unit test data
+- [ ] Separate parsing and data structure which is evaluated.
+- [ ] Refactor to module and driver program
+- [ ] Convert to a package 
+- [ ] Upload on github for continuous integration
+- [ ] Handling of large files (Pull-API/Memory Mapped files)
+- [ ] Speed-up through multiprocessing or threading (pypi)
+- [ ] Sphinx documentation
+- [ ] Add continuous measurements
+- [ ] Refactor to best practices. Check PEP8 conformance
+- [ ] Check package can be uploaded to PyPi.
+- [ ] Is the program able to handle overflows of numbers?
 
 ## Links
 

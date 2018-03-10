@@ -7,7 +7,6 @@ from functools import reduce
 from logging.config import fileConfig
 from pathlib import Path
 
-
 def addition(node):
     items = []
     for sc in node:
@@ -92,7 +91,7 @@ def main():
     :returns integer indicating success or failure
     """
 
-    # Use argparse to parse user arguments
+    # Parse user arguments
 
     parser = argparse.ArgumentParser(description = 'Process a set of expression files in a directory.')
     parser.add_argument('source', help='source directory for input files')

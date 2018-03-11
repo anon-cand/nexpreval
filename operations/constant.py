@@ -1,4 +1,4 @@
-from catalog.operation import Operation
+from operations.operation import Operation
 
 
 class Constant(Operation):

@@ -1,15 +1,17 @@
 import argparse
 import logging
 import os
+import sys
 import xml.etree.ElementTree as ET
 from logging.config import fileConfig
 from pathlib import Path
 
-from operations import Addition
-from operations import Constant
-from operations import Division
-from operations import Multiplication
-from operations import Subtraction
+from operation import Operation
+from addition import Addition
+from constant import Constant
+from division import Division
+from multiplication import Multiplication
+from subtraction import Subtraction
 
 operations = {
     'addition': Addition,
@@ -39,7 +41,7 @@ def file_parser(filepath):
         root = tree.getroot()
         for child in root:
             ops = ops_parser(child)
-            results[child.attrib['id']] = ops.evaluate()
+            results[child.attrib['id']] = ops()
     return results
 
 def convert(results):
@@ -55,6 +57,13 @@ def main():
     and passes the path to individual files to the expression parser
     :returns integer indicating success or failure
     """
+
+    # operations = {}
+    # for sc in Operation.__subclasses__():
+    #     operations[sc.key] = sc.__name__
+    #
+    # print(operations)
+    # sys.exit(1)
 
     # Parse user arguments
 

@@ -3,9 +3,7 @@ import abc
 
 class Operation(abc.ABC):
 
-    @property
-    def key(cls):
-        """Supplies the identifier corresponding to a given operator"""
+    TAG = "operation"
 
     @abc.abstractmethod
     def add_operand(self, operand, tag):

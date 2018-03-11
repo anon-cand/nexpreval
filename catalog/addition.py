@@ -1,20 +1,19 @@
-from operation import Operation
+from catalog.operation import Operation
 
 
 class Addition(Operation):
 
-    KEY = 'addition'
-
-    @property
-    def key(cls):
-        return Addition.KEY
+    TAG = 'addition'
+    OPERANDS = ('item')
 
     def __init__(self):
         self.items = []
 
-    def add_operand(self, operand, _):
+    def add_operand(self, operand, tag):
         if not isinstance(operand, Operation):
             raise TypeError("Operand of type Operator is expected")
+        if tag not in Addition.OPERANDS:
+            raise ValueError("Tag value can only be one of following: %s")
         self.items.append(operand)
 
     def evaluate(self):
@@ -25,5 +24,3 @@ class Addition(Operation):
             value += item.evaluate()
         return value
 
-    def __call__(self):
-        self.evaluate()

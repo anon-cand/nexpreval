@@ -1,13 +1,9 @@
-from operation import Operation
+from catalog.operation import Operation
 
 
 class Constant(Operation):
 
-    KEY = 'constant'
-
-    @property
-    def key(cls):
-        return Constant.KEY
+    TAG = 'constant'
 
     def __init__(self):
         self.value = None
@@ -19,6 +15,3 @@ class Constant(Operation):
         if self.value is None:
             raise ValueError("Value of this constant is not set")
         return self.value
-
-    def __call__(self):
-        self.evaluate()

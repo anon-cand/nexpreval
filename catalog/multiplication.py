@@ -1,20 +1,19 @@
-from operation import Operation
+from catalog.operation import Operation
 
 
 class Multiplication(Operation):
 
-    KEY = 'multiplication'
-
-    @property
-    def key(cls):
-        return Multiplication.KEY
+    TAG = 'multiplication'
+    OPERANDS = ('factor')
 
     def __init__(self):
         self.factors = []
 
-    def add_operand(self, operand, _):
+    def add_operand(self, operand, tag):
         if not isinstance(operand, Operation):
             raise TypeError("Operand of type Operator is expected")
+        if tag not in Multiplication.OPERANDS:
+            raise ValueError("Tag value can only be one of following: %s")
         self.factors.append(operand)
         return True
 
@@ -26,5 +25,3 @@ class Multiplication(Operation):
             value *= factor.evaluate()
         return value
 
-    def __call__(self):
-        self.evaluate()

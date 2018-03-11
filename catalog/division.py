@@ -1,14 +1,10 @@
-from operation import Operation
+from catalog.operation import Operation
 
 
 class Division(Operation):
 
-    KEY = 'division'
-    TAG = ('dividend', 'divisor')
-
-    @property
-    def key(cls):
-        return Division.KEY
+    TAG = 'division'
+    OPERANDS = ('dividend', 'divisor')
 
     def __init__(self):
         self.dividend = None
@@ -17,7 +13,7 @@ class Division(Operation):
     def add_operand(self, operand, tag):
         if not isinstance(operand, Operation):
             raise TypeError("Operand of type Operator is expected")
-        if tag not in Division.TAG:
+        if tag not in Division.OPERANDS:
             raise ValueError("Tag value cannot only be one of following: %s")
         if tag == 'dividend':
             self.dividend = operand
@@ -30,6 +26,3 @@ class Division(Operation):
         numerator = self.dividend.evaluate()
         denominator = self.divisor.evaluate()
         return numerator // denominator
-
-    def __call__(self):
-        self.evaluate()

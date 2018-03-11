@@ -2,6 +2,7 @@ import os
 import sys
 import argparse
 from pathlib import Path
+import xml.etree.ElementTree as ET
 
 import logging
 from logging.config import fileConfig
@@ -39,8 +40,31 @@ def process(source: Path, target: Path, extension: str = '.xml') -> None:
     # Invoke the parser on each of the entries
     for spec in entries:
         logger.info("Processing file: %s", spec)
-        result = spec_parser.parse(spec)
-        logger.info("Result: \n%s", result)
+        ops = spec_parser.parse(spec)
+        results = evaluate(ops)
+        if len(results) > 0:
+            result_xml = serialize(results)
+            logger.info("Result: \n%s", result_xml)
+        else:
+            logger.info("No results")
+
+
+def evaluate(ops: dict) -> dict:
+    """
+    This function signifies actual execution of operation
+    Given the execution is separated and ops objects have
+    hash we can calculate async and cache the results
+    :param ops: a dict of id and operations objects
+    :return: a map of id and results
+    """
+    return {id : obj.evaluate() for id, obj in ops.items()}
+
+def serialize(results):
+    root = ET.Element('expressions')
+    for k, v in results.items():
+        item = ET.SubElement(root, 'result', {'id': k})
+        item.text = str(v)
+    return ET.tostring(root, encoding='unicode')
 
 
 def main() -> int:

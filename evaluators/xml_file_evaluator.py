@@ -13,14 +13,15 @@ class XMLFileEvaluator:
             tree = ET.parse(file)
             root = tree.getroot()
             for child in root:
-                ops = self.process_node(ET.tostring(child, encoding="unicode"))
+                node_xml = ET.tostring(child, encoding="unicode")
+                ops = self.process_node(node_xml)
                 results[child.attrib['id']] = ops.evaluate()
             if len(results) > 0:
                 result_xml = self.serialize(results)
         return result_xml
 
-    def process_node(self, nodeText):
-        node = ET.fromstring(nodeText)
+    def process_node(self, node_xml):
+        node = ET.fromstring(node_xml)
         ops_type = self.operations.setdefault(node.tag, self.operations['constant'])
         ops = ops_type()
         if len(node) > 0:

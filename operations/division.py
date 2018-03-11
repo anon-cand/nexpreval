@@ -10,6 +10,14 @@ class Division(Operation):
         self.dividend = None
         self.divisor = None
 
+    def __hash__(self):
+        """ To optimize calls to evaluation. Assumes consistent evaluation for same internal state """
+        return hash(tuple([hash(x) for x in (self.dividend, self.divisor)]))
+
+    def __bool__(self):
+        """ Returns true if the object is initialized """
+        return self.dividend is not None and self.divisor is not None
+
     def add_operand(self, operand, tag):
         if not isinstance(operand, Operation):
             raise TypeError("Operand of type Operator is expected")

@@ -4,6 +4,7 @@ import abc
 class Operation(abc.ABC):
 
     TAG = "operation"
+    NAN = float('nan')
 
     @abc.abstractmethod
     def add_operand(self, operand, tag):

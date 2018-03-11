@@ -1,3 +1,4 @@
+import numbers
 from operations.operation import Operation
 
 
@@ -16,7 +17,7 @@ class Division(Operation):
 
     def __bool__(self):
         """ Returns true if the object is initialized """
-        return self.dividend is not None and self.divisor is not None
+        return all((self.dividend, self.divisor))
 
     def add_operand(self, operand, tag):
         if not isinstance(operand, Operation):
@@ -29,8 +30,9 @@ class Division(Operation):
             self.divisor = operand
 
     def evaluate(self):
-        if self.dividend is None or self.divisor is None:
-            raise ValueError("Either of dividend or divisor is not set")
-        numerator = self.dividend.evaluate()
-        denominator = self.divisor.evaluate()
-        return numerator // denominator
+        if self:
+            numerator = self.dividend.evaluate()
+            denominator = self.divisor.evaluate()
+            value = numerator // denominator
+            return value
+        return self.NAN

@@ -57,7 +57,7 @@ def evaluate(ops: dict) -> dict:
     :param ops: a dict of id and operations objects
     :return: a map of id and results
     """
-    return {id : obj.evaluate() for id, obj in ops.items()}
+    return {oid : obj.evaluate() for oid, obj in ops.items()}
 
 def serialize(results):
     root = ET.Element('expressions')

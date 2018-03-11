@@ -16,7 +16,7 @@ class Subtraction(Operation):
 
     def __bool__(self):
         """ Returns true if the object is initialized """
-        return self.minuend is not None and self.subtrahend is not None
+        return all((self.minuend, self.subtrahend))
 
     def add_operand(self, operand, tag):
         if not isinstance(operand, Operation):
@@ -29,8 +29,9 @@ class Subtraction(Operation):
             self.subtrahend = operand
 
     def evaluate(self):
-        if self.minuend is None or self.subtrahend is None:
-            raise ValueError("Either of minuend or subtrahend is not set")
-        m = self.minuend.evaluate()
-        s = self.subtrahend.evaluate()
-        return m - s
+        if self:
+            m = self.minuend.evaluate()
+            s = self.subtrahend.evaluate()
+            value = m - s
+            return value
+        return self.NAN

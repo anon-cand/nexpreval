@@ -1,5 +1,5 @@
 from operations.operation import Operation
-
+from functools import reduce
 
 class Multiplication(Operation):
 
@@ -15,7 +15,7 @@ class Multiplication(Operation):
 
     def __bool__(self):
         """ Returns true if the object is initialized """
-        return len(self.factors) > 0
+        return len(self.factors) > 0 and all(self.factors)
 
     def add_operand(self, operand, tag):
         if not isinstance(operand, Operation):
@@ -26,10 +26,9 @@ class Multiplication(Operation):
         return True
 
     def evaluate(self):
-        if len(self.factors) == 0:
-            raise ValueError("No factors has been supplied")
-        value = 1
-        for factor in self.factors:
-            value *= factor.evaluate()
-        return value
-
+        if self:
+            value = 1
+            for f in self.factors:
+                value *= f.evaluate()
+            return value
+        return self.NAN

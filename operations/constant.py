@@ -14,7 +14,7 @@ class Constant(Operation):
 
     def __bool__(self):
         """ Returns true if the object is initialized """
-        return self.value is not None and isinstance(self.value, (int, float))
+        return self.value and isinstance(self.value, (int, float))
 
     def add_operand(self, operand, _):
         try:
@@ -24,6 +24,4 @@ class Constant(Operation):
         self.value = int(operand)
 
     def evaluate(self):
-        if self.value is None:
-            raise ValueError("Value of this constant is not set")
-        return self.value
+        return self.value if self else self.NAN

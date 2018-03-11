@@ -13,14 +13,14 @@
 - [ ] Refactor to module and driver program
 - [x] Convert operations to a package
 - [ ] Introduce asynchronous processing of files
-- [ ] Separate evaluation of operation from operation
+- [x] Separate evaluation of operation from operation
 - [ ] Operations can form a dependency graph. However these dependencies are independent and can be processed in parallel.
 - [ ] Upload on github for continuous integration
-- [ ] Handling of large files (Pull-API/Memory Mapped files)
+- [x] Handling of large files (Pull-API/Memory Mapped files)
 - [ ] Sphinx documentation
 - [ ] Add continuous measurements
 - [ ] Refactor to best practices. Check PEP8 conformance
-- [ ] Check package can be uploaded to PyPi.
+- [ ] Create wheel files for package?
 - [ ] Is the program able to handle overflows of numbers?
 - [ ] Are the guidelines in Fluent Python / Zen of Python followed?
 - [ ] Is the application conforming to TwelveFactors?

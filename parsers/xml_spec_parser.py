@@ -44,6 +44,12 @@ class XMLSpecParser:
 
     @staticmethod
     def read_spec(spec, size=1024):
+        """
+        Reads a given spec in 'size' chunks
+        :param spec:
+        :param size: chunk size (default: 1024)
+        :return:
+        """
         iterator = iter(spec)
         for first in iterator:
             yield chain([first], islice(iterator, size - 1))

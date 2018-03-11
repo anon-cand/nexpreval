@@ -15,7 +15,7 @@ class Addition(Operation):
 
     def __bool__(self):
         """ Returns true if the object is initialized """
-        return len(self.items) > 0
+        return len(self.items) > 0 and all(self.items)
 
     def add_operand(self, operand, tag):
         if not isinstance(operand, Operation):
@@ -25,10 +25,8 @@ class Addition(Operation):
         self.items.append(operand)
 
     def evaluate(self):
-        if len(self.items) == 0:
-            raise ValueError("No items have been supplied")
-        value = 0
-        for item in self.items:
-            value += item.evaluate()
+        value = sum([item.evaluate() for item in self.items]) if self else self.NAN
         return value
+
+
 

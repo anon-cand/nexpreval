@@ -6,15 +6,17 @@
 - [x] Create a bare bones working version.
 - [x] Add logging, argument parsing and validations.
 - [x] Separate parsing and data structure which is evaluated.
-- [ ] Is the design of ops and protocol class (Operations) Pythonic? 
+- [x] Is the design of ops and protocol class (Operations) Pythonic?
 - [ ] Add unit tests. 
 - [ ] Data Generator for unit test data
-- [ ] Dynamically build the operations map by importing all modules from folder?
+- [x] Dynamically build the operations map by importing all modules from folder?
 - [ ] Refactor to module and driver program
-- [ ] Convert to a package 
+- [x] Convert operations to a package
+- [ ] Introduce asynchronous processing of files
+- [ ] Separate evaluation of operation from evaluation
+- [ ] Operations can form a dependency graph. However these dependencies are independent and can be processed in parallel.
 - [ ] Upload on github for continuous integration
 - [ ] Handling of large files (Pull-API/Memory Mapped files)
-- [ ] Speed-up through multiprocessing or threading (pypi)
 - [ ] Sphinx documentation
 - [ ] Add continuous measurements
 - [ ] Refactor to best practices. Check PEP8 conformance

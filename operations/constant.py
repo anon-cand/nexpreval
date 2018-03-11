@@ -3,7 +3,7 @@ from operations.operation import Operation
 
 class Constant(Operation):
 
-    TAG = 'constant'
+    TAG = 'default'
 
     def __init__(self):
         self.value = None

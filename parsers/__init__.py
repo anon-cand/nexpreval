@@ -1,8 +1,8 @@
 import logging
 from logging import NullHandler
 
-from .xml_file_evaluator import XMLFileEvaluator
+from .xml_spec_parser import XMLSpecParser
 
-__all__ = ['XMLFileEvaluator']
+__all__ = ['XMLSpecParser']
 
 logging.getLogger(__name__).addHandler(NullHandler())

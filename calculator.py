@@ -1,16 +1,49 @@
-import argparse
 import os
 import sys
+import argparse
 from pathlib import Path
 
 import logging
 from logging.config import fileConfig
 
-from operations import *
-from evaluators import XMLFileEvaluator
+from operations import catalogue
+from parsers import XMLSpecParser
 
 
-def main():
+def process(source: Path, target: Path, extension: str = '.xml') -> None:
+    """
+    Processes all expression files with given extension in source directory
+    Assumes that all files with given extension are expression files
+    :param source: Path to source directory
+    :param target: Path to target directory
+    :param extension: extension of the files to be processed (default: '.xml')
+    :return: None
+    """
+    logger = logging.getLogger()
+
+    logger.debug('Sourcing available operations')
+    operations = catalogue()
+
+    logger.debug('Initializing the spec parser')
+    spec_parser = XMLSpecParser(operations)
+
+    # For clarity do not use list comprehension
+    entries = []
+    logger.debug('Traversing the source directory')
+    for root, _, names in os.walk(source):
+        for name in names:
+            if name.endswith(extension):
+                full_path = os.path.join(root, name)
+                entries.append(full_path)
+
+    # Invoke the parser on each of the entries
+    for spec in entries:
+        logger.info("Processing file: %s", spec)
+        result = spec_parser.parse(spec)
+        logger.info("Result: \n%s", result)
+
+
+def main() -> int:
     """
     Driver function that accepts and validates user arguments
     and passes the path to individual files to the expression parser
@@ -18,7 +51,7 @@ def main():
     """
     logger = logging.getLogger()
 
-    # Parse user arguments
+    logger.debug('Parsing arguments passed to the program')
     parser = argparse.ArgumentParser(description='Process a set of expression files in a directory.')
     parser.add_argument('source', help='source directory for input files')
     parser.add_argument('target', help='destination directory for output files')
@@ -27,7 +60,7 @@ def main():
     source_path = Path(args.source)  # Path to source directory
     target_path = Path(args.target)  # Path to destination directory
 
-    # Validate arguments and log error message (if any)
+    logger.debug('Validating paths are valid and are directories')
     if not (source_path.exists() and source_path.is_dir()):
         logger.error('Given path to source directory is not valid.')
         return 1
@@ -39,7 +72,7 @@ def main():
     source = source_path.resolve()
     target = target_path.resolve()
 
-    # Check if directories are accessible
+    logger.debug('Checking if the directories are accessible to current user')
     if not (os.access(source, os.R_OK)):
         logger.error('Read permissions on source directory is missing.')
         return 1
@@ -48,21 +81,14 @@ def main():
         logger.error('Read/write permissions on target directory are missing.')
         return 1
 
-    # Process files in the source directory
-    logger.info('Source path: %s', source)
-    logger.info('Target path: %s', target)
+    logger.info('Starting processing of XML files in source directory')
+    logger.info('Source: %s', source)
+    logger.info('Target: %s', target)
+    process(source, target)
 
-    # Import all the operations available
-    operations = {sc.TAG: sc for sc in Operation.__subclasses__()}
-    evaluator = XMLFileEvaluator(operations)
+    return 0
 
-    # Start processing
-    with os.scandir(source) as it:
-        for entry in it:
-            logger.info("Processing file: %s", entry.name)
-            result = evaluator.process(entry.path)
-            logger.info("Result: \n%s", result)
 
 if __name__ == '__main__':
     fileConfig('logging.ini')
-    main()
+    sys.exit(main())

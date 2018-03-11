@@ -1,14 +1,19 @@
 import xml.etree.ElementTree as ET
 
 
-class XMLFileEvaluator:
+class XMLSpecParser:
 
     def __init__(self, operations):
         self.operations = operations
 
-    def process(self, file_path):
+    def parse(self, spec: str) -> str:
+        """
+        Parses the given
+        :param spec: path to the XML spec file
+        :return: results as an XML string
+        """
         result_xml = None
-        with open(file_path) as file:
+        with open(spec) as file:
             results = {}
             tree = ET.parse(file)
             root = tree.getroot()
@@ -22,7 +27,7 @@ class XMLFileEvaluator:
 
     def process_node(self, node_xml):
         node = ET.fromstring(node_xml)
-        ops_type = self.operations.setdefault(node.tag, self.operations['constant'])
+        ops_type = self.operations.setdefault(node.tag, self.operations['default'])
         ops = ops_type()
         if len(node) > 0:
             for sc in node:

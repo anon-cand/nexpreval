@@ -1,118 +1,116 @@
 import os
-import sys
-import argparse
-from pathlib import Path
-import xml.etree.ElementTree as ET
-
 import logging
-from logging.config import fileConfig
-
+from pathlib import Path
 from operations import catalogue
 from parsers import XMLSpecParser
 
 
-def process(source: Path, target: Path, extension: str = '.xml') -> None:
+class ExpressionCalculator:
     """
     Processes all expression files with given extension in source directory
     Assumes that all files with given extension are expression files
-    :param source: Path to source directory
-    :param target: Path to target directory
-    :param extension: extension of the files to be processed (default: '.xml')
-    :return: None
     """
-    logger = logging.getLogger()
 
-    logger.debug('Sourcing available operations')
-    operations = catalogue()
+    __slots__ = ('source_dir', 'target_dir', 'extension', 'operations', 'spec_parser')
 
-    logger.debug('Initializing the spec parser')
-    spec_parser = XMLSpecParser(operations)
+    def __init__(self, source: str, target: str, extension: str):
+        """
+        :param source: Path to source directory
+        :param target: Path to target directory
+        :param extension: extension of the files to be processed
+        :return: None
+        """
+        self.operations = None
+        self.spec_parser = None
+        self.source_dir = None
+        self.target_dir = None
+        self.extension = extension
+        self.validate(source, target)  # Validate the inputs
+        self.operations = catalogue()  # Build the operations catalogues
+        self.spec_parser = XMLSpecParser(self.operations)  # Initialize the parser
 
-    # For clarity do not use list comprehension
-    entries = []
-    logger.debug('Traversing the source directory')
-    for root, _, names in os.walk(source):
-        for name in names:
-            if name.endswith(extension):
-                full_path = os.path.join(root, name)
-                entries.append(full_path)
+    def process(self):
+        """
+        This function acts as a coordinator for actual execution
+        """
+        logger = logging.getLogger(__name__)
+        logger.info('Collecting names of files that will be processed')
+        entries = self.entries()
+        logger.info('Found %d files to process', len(entries))
+        for spec in entries:
+            logger.info('Parsing spec: %s', spec)
+            operations = self.spec_parser.parse(spec)
+            logger.info('Evaluating operations found in the spec')
+            results = self.evaluate(operations)
+            logger.info('Persisting results for the spec')
+            self.persist(os.path.basename(spec), results)
 
-    # Invoke the parser on each of the entries
-    for spec in entries:
-        logger.info("Processing file: %s", spec)
-        ops = spec_parser.parse(spec)
-        results = evaluate(ops)
-        if len(results) > 0:
-            result_xml = serialize(results)
-            logger.info("Result: \n%s", result_xml)
-        else:
-            logger.info("No results")
+    def entries(self) -> list:
+        """
+        Walk through the file system and find all suitable files
+        :return: a list of files that have to be processed
+        """
+        entries = []
+        logger = logging.getLogger(__name__)
+        logger.debug('Traversing the source directory')
+        for root, _, names in os.walk(self.source_dir):
+            for name in names:
+                if name.endswith(self.extension):
+                    full_path = os.path.join(root, name)
+                    entries.append(full_path)
+        return entries
 
+    def evaluate(self, operations: dict) -> dict:
+        """
+        Execute operations.
+        :param operations: a mapping of id and operations objects
+        :return: a map of id and results
+        """
+        return {oid: obj() for oid, obj in operations.items()}
 
-def evaluate(ops: dict) -> dict:
-    """
-    This function signifies actual execution of operation
-    Given the execution is separated and ops objects have
-    hash we can calculate async and cache the results
-    :param ops: a dict of id and operations objects
-    :return: a map of id and results
-    """
-    return {oid : obj.evaluate() for oid, obj in ops.items()}
+    def persist(self, spec: str, results: dict):
+        """
+        Transform the results using spec parser and save
+        them to the target directory
+        :param spec: name of the spec to be used for generating target file name
+        :param results: mapping of top-level operation id and their results
+        :return: information on the resultant file
+        """
+        logger = logging.getLogger(__name__)
+        logger.debug('Preparing results for persistence')
+        writeable = self.spec_parser.serialize(results, 'expressions', 'result')
+        if writeable:
+            logger.info('Saving results to target directory: \n%s', writeable)
 
-def serialize(results):
-    root = ET.Element('expressions')
-    for k, v in results.items():
-        item = ET.SubElement(root, 'result', {'id': k})
-        item.text = str(v)
-    return ET.tostring(root, encoding='unicode')
+    def validate(self, source: str, target: str):
+        """
+        Validates inputs to the application
+        :param source: path to source directory
+        :param target: path to target directory
+        :return:
+        """
+        logger = logging.getLogger(__name__)
 
+        source_path = Path(source)  # Path to source directory
+        target_path = Path(target)  # Path to destination directory
 
-def main() -> int:
-    """
-    Driver function that accepts and validates user arguments
-    and passes the path to individual files to the expression parser
-    :returns integer indicating success or failure
-    """
-    logger = logging.getLogger()
+        logger.debug('Validating paths are valid and are directories')
+        if not (source_path.exists() and source_path.is_dir()):
+            raise ValueError('Path to source directory is not valid.')
 
-    logger.debug('Parsing arguments passed to the program')
-    parser = argparse.ArgumentParser(description='Process a set of expression files in a directory.')
-    parser.add_argument('source', help='source directory for input files')
-    parser.add_argument('target', help='destination directory for output files')
-    args = parser.parse_args()
+        if not (target_path.exists() and target_path.is_dir()):
+            raise ValueError('Path to target directory is not valid.')
 
-    source_path = Path(args.source)  # Path to source directory
-    target_path = Path(args.target)  # Path to destination directory
+        source = source_path.resolve()
+        target = target_path.resolve()
 
-    logger.debug('Validating paths are valid and are directories')
-    if not (source_path.exists() and source_path.is_dir()):
-        logger.error('Given path to source directory is not valid.')
-        return 1
+        logger.debug('Checking if the directories are accessible to current user')
+        if not (os.access(source, os.R_OK)):
+            raise ValueError('Read permissions on source directory is missing.')
 
-    if not (target_path.exists() and target_path.is_dir()):
-        logger.error('Given path to target directory is not valid.')
-        return 1
+        if not (os.access(target, os.R_OK | os.W_OK)):
+            raise ValueError('Read/write permissions on target directory are missing.')
 
-    source = source_path.resolve()
-    target = target_path.resolve()
+        self.source_dir = source
+        self.target_dir = target
 
-    logger.debug('Checking if the directories are accessible to current user')
-    if not (os.access(source, os.R_OK)):
-        logger.error('Read permissions on source directory is missing.')
-        return 1
-
-    if not (os.access(target, os.R_OK | os.W_OK)):
-        logger.error('Read/write permissions on target directory are missing.')
-        return 1
-
-    logger.info('Starting processing of XML files in source directory')
-    logger.info('Source: %s', source)
-    logger.info('Target: %s', target)
-    process(source, target)
-
-    return 0
-
-
-if __name__ == '__main__':
-    fileConfig('logging.ini')
-    sys.exit(main())

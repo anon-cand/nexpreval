@@ -2,8 +2,10 @@ import abc
 
 
 class Operation(abc.ABC):
+    """
+    Abstract Base Class to represent an operation following Command Design Pattern
+    """
 
-    TAG = "operation"
     NAN = float('nan')
 
     @abc.abstractmethod
@@ -13,11 +15,4 @@ class Operation(abc.ABC):
         :param operand: an instance of Operator class that evaluate to a number
         :param tag: extra information on operand interpreted by the subclass
         :return: void
-        """
-
-    @abc.abstractmethod
-    def evaluate(self):
-        """
-        A subclass applies its algorithm over its operators
-        :return: a number
         """

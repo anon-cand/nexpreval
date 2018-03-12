@@ -10,11 +10,11 @@
 - [ ] Add unit tests. 
 - [ ] Data Generator for unit test data
 - [x] Dynamically build the operations map by importing all modules from folder?
-- [ ] Refactor to module and driver program
+- [x] Refactor to module and driver program
 - [x] Convert operations to a package
 - [ ] Introduce asynchronous processing of files
 - [x] Separate evaluation of operation from operation
-- [ ] Operations can form a dependency graph. However these dependencies are independent and can be processed in parallel.
+- [x] Operations can form a dependency graph. However these dependencies are independent and can be processed in parallel.
 - [ ] Upload on github for continuous integration
 - [x] Handling of large files (Pull-API/Memory Mapped files)
 - [ ] Sphinx documentation

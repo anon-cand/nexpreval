@@ -1,34 +1,39 @@
 from operations.operation import Operation
-from functools import reduce
+
 
 class Multiplication(Operation):
 
     TAG = 'multiplication'
-    OPERANDS = ('factor')
+    __slots__ = 'factors'
 
     def __init__(self):
         self.factors = []
 
     def __hash__(self):
-        """ To optimize calls to evaluation. Assumes consistent evaluation for same internal state """
-        return hash(tuple([hash(factor) for factor in self.factors]))
+        hashes = (hash(factor) for factor in self.factors)
+        combined = hash(())
+        for h in hashes:
+            combined ^= h
+        return combined
 
-    def __bool__(self):
-        """ Returns true if the object is initialized """
-        return len(self.factors) > 0 and all(self.factors)
+    def __call__(self):
+        """
+        Perform the operation on operands
+        :return: a number representing the outcome of operation or NaN
+        """
+        if len(self.factors) > 0:
+            value = 1
+            for factor in self.factors:
+                value *= factor()
+            return value
+        return self.NAN
 
     def add_operand(self, operand, tag):
+        """ Add an operand for this operation """
         if not isinstance(operand, Operation):
             raise TypeError("Operand of type Operator is expected")
-        if tag not in Multiplication.OPERANDS:
-            raise ValueError("Tag value can only be one of following: %s")
+        if tag not in self.__slots__:
+            raise ValueError("Tag value can only be one of following: ", *self.__slots__)
         self.factors.append(operand)
         return True
 
-    def evaluate(self):
-        if self:
-            value = 1
-            for f in self.factors:
-                value *= f.evaluate()
-            return value
-        return self.NAN

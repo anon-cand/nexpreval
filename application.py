@@ -18,10 +18,11 @@ def main():
     parser = argparse.ArgumentParser(description='Process a set of expression files in a directory.')
     parser.add_argument('source', help='source directory for input files')
     parser.add_argument('target', help='destination directory for output files')
+    parser.add_argument('--extension', default='.xml', help='Extension for spec files')
     args = parser.parse_args()
 
     logger.info('Initializing the application engine')
-    application = ExpressionCalculator(args.source, args.target, '.xml')
+    application = ExpressionCalculator(args.source, args.target, args.extension)
     logger.info('Initiating processing')
     application.process()
 

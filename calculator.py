@@ -27,7 +27,7 @@ class ExpressionCalculator:
         self.extension = extension
         self.validate(source, target)  # Validate the inputs
         self.operations = catalogue()  # Build the operations catalogues
-        self.spec_parser = XMLSpecParser(self.operations)  # Initialize the parser
+        self.spec_parser = XMLSpecParser(self.operations, extension)  # Initialize the parser
 
     def process(self):
         """
@@ -43,7 +43,7 @@ class ExpressionCalculator:
             logger.info('Evaluating operations found in the spec')
             results = self.evaluate(operations)
             logger.info('Persisting results for the spec')
-            self.persist(os.path.basename(spec), results)
+            self.persist(spec, results)
 
     def entries(self) -> list:
         """
@@ -55,7 +55,7 @@ class ExpressionCalculator:
         logger.debug('Traversing the source directory')
         for root, _, names in os.walk(self.source_dir):
             for name in names:
-                if name.endswith(self.extension):
+                if Path(name).suffix == self.extension:
                     full_path = os.path.join(root, name)
                     entries.append(full_path)
         return entries
@@ -78,9 +78,18 @@ class ExpressionCalculator:
         """
         logger = logging.getLogger(__name__)
         logger.debug('Preparing results for persistence')
-        writeable = self.spec_parser.serialize(results, 'expressions', 'result')
-        if writeable:
-            logger.info('Saving results to target directory: \n%s', writeable)
+        serialized_result = self.spec_parser.serialize(results, 'expressions', 'result')
+        if serialized_result:
+            logger.debug('Determining result file path')
+            spec_path = Path(spec)
+            file_name = spec_path.name[:-len(spec_path.suffix)]
+            result_file_name = '%s_result%s' % (file_name, spec_path.suffix)
+            result_file_path = self.target_dir.joinpath(result_file_name)
+            with open(result_file_path, 'w') as rf:
+                rf.write(serialized_result)
+                logger.info('Results for spec %s have been saved to: %s', spec_path.name, result_file_path)
+        else:
+            logger.error("Failed to serialize results")
 
     def validate(self, source: str, target: str):
         """

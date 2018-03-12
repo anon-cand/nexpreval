@@ -7,10 +7,14 @@ class XMLSpecParser:
     """
     Parser for spec files written in XML
     """
+    SPEC_EXTENSION = '.xml'
     __slots__ = 'operations'
 
-    def __init__(self, operations):
+    def __init__(self, operations, extension):
+        if not extension == self.SPEC_EXTENSION:
+            raise ValueError('Spec files in XML format are only supported')
         self.operations = operations
+
 
     def parse(self, spec: str) -> dict:
         """
